@@ -1,9 +1,10 @@
 package server
 
 import (
+	"TestTask/internal/controller/middleware"
 	"TestTask/internal/handler"
+	"TestTask/pkg/log"
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -23,8 +24,7 @@ func NewServer(s *http.Server, h *handler.Handler, l log.Logger) *Server {
 
 func (s *Server) Serve() error {
 	mux := http.NewServeMux()
-	//mux.HandleFunc("/segment", middleware.AddLogger(middleware.RequestLogger(s.HandleSegment), s.l))
-	//mux.HandleFunc("/user_segment", middleware.AddLogger(middleware.RequestLogger(s.HandleSegmentToUser), s.l))
+	mux.HandleFunc("/user_tariffs", middleware.AddLogger(middleware.RequestLogger(s.HandleShowTariffs), s.l))
 	s.s.Handler = mux
 
 	return s.s.ListenAndServe()

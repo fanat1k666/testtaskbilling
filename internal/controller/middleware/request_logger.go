@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"TestTask/pkg/log"
 	"fmt"
-	"log"
 	"net/http"
 )
 

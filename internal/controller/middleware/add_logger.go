@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"log"
+	"TestTask/pkg/log"
 	"net/http"
 )
 

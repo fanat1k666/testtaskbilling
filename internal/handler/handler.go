@@ -1,9 +1,11 @@
 package handler
 
+import "TestTask/internal/repository"
+
 type Handler struct {
-	us repository.UserSegment
+	us repository.UserTariffs
 }
 
-func NewHandler(us repository.UserSegment) *Handler {
+func NewHandler(us repository.UserTariffs) *Handler {
 	return &Handler{us: us}
 }

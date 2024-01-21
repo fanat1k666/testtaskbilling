@@ -3,11 +3,13 @@ package main
 import (
 	"TestTask/internal/controller/server"
 	"TestTask/internal/handler"
+	"TestTask/internal/postgres"
+	"github.com/sirupsen/logrus"
 	"net/http"
 )
 
 func main() {
-	db, err := postgres.NewPostgres("pgdb", 5432, "postgres", "postgres", "avito")
+	db, err := postgres.NewPostgres("192.168.56.101", 5432, "postgres", "password", "testdb")
 	if err != nil {
 		panic(err)
 	}
