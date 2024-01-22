@@ -31,7 +31,7 @@ func NewPostgres(host string, port int, user string, password string, dbname str
 	}, nil
 }
 
-func (p *Postgres) ShowTariffs(userId int) ([]repository.ShowUserTariffs, error) {
+func (p *Postgres) ShowTariff(userId int) ([]repository.ShowUserTariff, error) {
 	rows, err := p.db.Query(`SELECT u.user_id, name FROM tariffs
 	INNER JOIN user_tariffs ON tariffs.id = user_tariffs.tariffs_id
 	INNER JOIN public."user" u on user_tariffs.user_id = u.id
@@ -41,15 +41,22 @@ func (p *Postgres) ShowTariffs(userId int) ([]repository.ShowUserTariffs, error)
 	}
 	defer rows.Close()
 
-	var segments []repository.ShowUserTariffs
+	var tariffs []repository.ShowUserTariff
 	for rows.Next() {
-		s := repository.ShowUserTariffs{}
+		s := repository.ShowUserTariff{}
 		err = rows.Scan(&s.UserId, &s.Name)
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		segments = append(segments, s)
+		tariffs = append(tariffs, s)
 	}
-	return segments, nil
+	return tariffs, nil
+}
+func (p *Postgres) CreateTariff(name string, price int) error {
+	_, err := p.db.Exec(`INSERT INTO tariffs (name,price) VALUES ($1,$2)`, name, price)
+	if err != nil {
+		return fmt.Errorf("can't create tariff: %w", err)
+	}
+	return nil
 }

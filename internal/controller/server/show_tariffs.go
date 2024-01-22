@@ -7,17 +7,17 @@ import (
 	"net/http"
 )
 
-type ShowTariffsIn struct {
+type ShowTariffIn struct {
 	UserId int `json:"user_id"`
 }
 
-type ShowTariffsOut struct {
+type ShowTariffOut struct {
 	UserId  int      `json:"userId"`
 	Tariffs []string `json:"tariffs"`
 	Err     *string  `json:"err,omitempty"`
 }
 
-func (s *Server) HandleShowTariffs(w http.ResponseWriter, r *http.Request) {
+func (s *Server) HandleShowTariff(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return
@@ -25,16 +25,16 @@ func (s *Server) HandleShowTariffs(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	if err != nil {
 		errorStr := err.Error()
-		ans := ShowTariffsOut{Err: &errorStr}
+		ans := ShowTariffOut{Err: &errorStr}
 		s.SendAnswer(w, ans, http.StatusBadGateway)
 		return
 	}
 
-	in := ShowTariffsIn{}
+	in := ShowTariffIn{}
 	err = json.Unmarshal(body, &in)
 	if err != nil {
 		errorStr := err.Error()
-		ans := ShowTariffsOut{Err: &errorStr}
+		ans := ShowTariffOut{Err: &errorStr}
 		s.SendAnswer(w, ans, http.StatusBadRequest)
 		return
 	}
@@ -43,10 +43,10 @@ func (s *Server) HandleShowTariffs(w http.ResponseWriter, r *http.Request) {
 		UserId: in.UserId,
 	}
 
-	rows, err := s.h.ShowTariffs(eUs)
+	rows, err := s.h.ShowTariff(eUs)
 	if err != nil {
 		errorStr := err.Error()
-		ans := ShowTariffsOut{Err: &errorStr}
+		ans := ShowTariffOut{Err: &errorStr}
 		s.SendAnswer(w, ans, http.StatusInternalServerError)
 		return
 	}
@@ -58,5 +58,5 @@ func (s *Server) HandleShowTariffs(w http.ResponseWriter, r *http.Request) {
 			end = append(end, rows[i].Name)
 		}
 	}
-	s.SendAnswer(w, ShowTariffsOut{UserId: u, Tariffs: end}, http.StatusOK)
+	s.SendAnswer(w, ShowTariffOut{UserId: u, Tariffs: end}, http.StatusOK)
 }

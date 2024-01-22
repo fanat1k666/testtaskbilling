@@ -1,9 +1,10 @@
 package repository
 
 type UserTariffs interface {
-	ShowTariffs(userId int) ([]ShowUserTariffs, error)
+	ShowTariff(userId int) ([]ShowUserTariff, error)
+	CreateTariff(name string, price int) error
 }
-type ShowUserTariffs struct {
+type ShowUserTariff struct {
 	UserId int
 	Name   string
 }

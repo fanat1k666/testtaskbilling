@@ -24,7 +24,7 @@ func NewServer(s *http.Server, h *handler.Handler, l log.Logger) *Server {
 
 func (s *Server) Serve() error {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/user_tariffs", middleware.AddLogger(middleware.RequestLogger(s.HandleShowTariffs), s.l))
+	mux.HandleFunc("/user_tariffs", middleware.AddLogger(middleware.RequestLogger(s.HandleTariffs), s.l))
 	s.s.Handler = mux
 
 	return s.s.ListenAndServe()

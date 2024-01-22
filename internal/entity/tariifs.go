@@ -1,6 +1,6 @@
 package entity
 
-type tariffs struct {
+type Tariffs struct {
 	Id    int
 	Name  string
 	Price int

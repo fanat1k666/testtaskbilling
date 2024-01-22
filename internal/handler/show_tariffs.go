@@ -6,8 +6,8 @@ import (
 	"fmt"
 )
 
-func (h *Handler) ShowTariffs(user entity.User) ([]repository.ShowUserTariffs, error) {
-	line, err := h.us.ShowTariffs(user.UserId)
+func (h *Handler) ShowTariff(user entity.User) ([]repository.ShowUserTariff, error) {
+	line, err := h.us.ShowTariff(user.UserId)
 	if err != nil {
 		return nil, fmt.Errorf("can't show tariffs: %w", err)
 	}
