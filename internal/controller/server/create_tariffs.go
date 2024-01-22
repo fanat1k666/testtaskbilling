@@ -51,5 +51,5 @@ func (s *Server) HandleCreateTariff(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.SendAnswer(w, CreateTariffOut{}, http.StatusOK)
+	s.SendAnswer(w, "Successfully!", http.StatusOK)
 }

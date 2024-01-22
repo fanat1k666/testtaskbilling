@@ -40,7 +40,6 @@ func (p *Postgres) ShowTariff(userId int) ([]repository.ShowUserTariff, error) {
 		return nil, fmt.Errorf("can't found user: %w", err)
 	}
 	defer rows.Close()
-
 	var tariffs []repository.ShowUserTariff
 	for rows.Next() {
 		s := repository.ShowUserTariff{}
@@ -53,6 +52,7 @@ func (p *Postgres) ShowTariff(userId int) ([]repository.ShowUserTariff, error) {
 	}
 	return tariffs, nil
 }
+
 func (p *Postgres) CreateTariff(name string, price int) error {
 	_, err := p.db.Exec(`INSERT INTO tariffs (name,price) VALUES ($1,$2)`, name, price)
 	if err != nil {

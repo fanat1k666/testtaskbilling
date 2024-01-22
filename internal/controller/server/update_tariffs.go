@@ -50,5 +50,5 @@ func (s *Server) HandleUpdateTariff(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.SendAnswer(w, UpdateTariffOut{}, http.StatusOK)
+	s.SendAnswer(w, "Successfully!", http.StatusOK)
 }

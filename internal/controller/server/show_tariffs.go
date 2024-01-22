@@ -12,9 +12,9 @@ type ShowTariffIn struct {
 }
 
 type ShowTariffOut struct {
-	UserId  int      `json:"userId"`
-	Tariffs []string `json:"tariffs"`
-	Err     *string  `json:"err,omitempty"`
+	UserId  int     `json:"userId"`
+	Tariffs string  `json:"tariffs"`
+	Err     *string `json:"err,omitempty"`
 }
 
 func (s *Server) HandleShowTariff(w http.ResponseWriter, r *http.Request) {
@@ -50,13 +50,5 @@ func (s *Server) HandleShowTariff(w http.ResponseWriter, r *http.Request) {
 		s.SendAnswer(w, ans, http.StatusInternalServerError)
 		return
 	}
-	var end []string
-	var u int
-	if len(rows) != 0 {
-		u = rows[0].UserId
-		for i := range rows {
-			end = append(end, rows[i].Name)
-		}
-	}
-	s.SendAnswer(w, ShowTariffOut{UserId: u, Tariffs: end}, http.StatusOK)
+	s.SendAnswer(w, ShowTariffOut{UserId: rows[0].UserId, Tariffs: rows[0].Name}, http.StatusOK)
 }
