@@ -8,6 +8,8 @@ func (s *Server) HandleTariffs(w http.ResponseWriter, r *http.Request) {
 		s.HandleCreateTariff(w, r)
 	case http.MethodGet:
 		s.HandleShowTariff(w, r)
+	case http.MethodPut:
+		s.HandleUpdateTariff(w, r)
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}

@@ -60,3 +60,11 @@ func (p *Postgres) CreateTariff(name string, price int) error {
 	}
 	return nil
 }
+
+func (p *Postgres) UpdateTariff(name string, price int) error {
+	_, err := p.db.Exec(`UPDATE tariffs SET price=$2 WHERE name=$1`, name, price)
+	if err != nil {
+		return fmt.Errorf("can't update tariff: %w", err)
+	}
+	return nil
+}
